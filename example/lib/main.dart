@@ -33,6 +33,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final sampleSong = """{t:A Nice Sample Song}
+{st:Grzegorz Pietrzak}
+{key:C}
+
+# Let's start it!
+[C]Let's sing this [G]song [Am]together [Em]aloud
+[F]It's an [C]example [Dm]with some nice [G]sound
+
+{soc: Chorus}
+[Bb]Whenever you [Am7]need to [Bb]format your [Am7]chords
+[Dm]The solution to your [F]problems [G]is very close
+{eoc}
+
+{comment: Now we recite some text}
+Sometimes you write text
+And there's no more room for chords
+
+{comment: Sometimes you play music without any words}
+[C] [G] [Am] [Em]
+
+You don't know where the chords are? ~ [F] [C]
+You don't have to know ~ [G] [G/F#]
+
+{sot: Outro}
+E-12---------------------|
+B----11-12---------------|
+G----------11s13-14------|
+D-------------------10-12|
+A------------------------|
+E------------------------|
+{eot}
+
+{comment: The end}
+Let's finish this song. [G] It's the end of the show.
+""";
+
   final parser = ChordsProParser();
   final htmlFormatter = HtmlFormatter();
   final monoSpaceFormatter = MonospaceFormatter();
@@ -147,22 +183,3 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
-const sampleSong = """"Details:
-Current: Key- [Bbm] ; 1st Verse Note- [Db] ; Vocal Range- [Db] – [Gb] (1.5 oct)
-Original: Tempo- 4/4 195 BPM; Key- Bbm; 1st Verse Note- Db; Vocal Range- Db3 – Gb4
-Play in Am: Capo- 1; 1st Verse Note- C
-Play in Em: Capo- 6; 1st Verse Note- G
-
-Verse:
-Korō[Bbm]v, korōv Hashem l'[Ebm]chol kō[Bbm]r'ov
-L'[Ebm]chōl asher yikro'[Ab]uhu ve'e[Db]mes
-Ko[Bbm]rōv, korōv Hashem l'[Ebm]chol kōr'ov
-L'[Bbm]chōl asher yikro'[Bbm]u[F]hu ve'e[Bbm]mes
-
-Chorus:
-R't[Bbm]zōn y'rei'ov, r'tzōn y'[Ebm]rei'ov ya'a[F]se 
-V'[F7]es, v'es shavosom yishma v'yōshi'[Bbm]eim - [F]- - |
-R't[Bbm]zōn y'rei'ov, r't[Bb7]zōn y'rei'ov ya'a[Ebm]se 
-V'[F]es, v'es shavosom yishma v'yōshi'[Bbm]eim"
-""";

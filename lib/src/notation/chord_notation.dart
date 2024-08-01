@@ -2,24 +2,24 @@ import 'package:chordspro_dart/src/notation/chord_notation_interface.dart';
 
 abstract class ChordNotation implements ChordNotationInterface {
   /// Get the table of chord key mappings to English.
-  List<String> getToEnglishTable();
+  Map<String, String> getToEnglishTable();
 
   /// Get the table of chord key mappings from English.
-  List<String> getFromEnglishTable();
+  Map<String, String> getFromEnglishTable();
 
   @override
   String convertChordRootFromNotation(String chordRoot) {
     var mappings = getToEnglishTable();
-    return mappings.isNotEmpty && mappings.contains(chordRoot)
-        ? mappings[mappings.indexOf(chordRoot)]
+    return mappings.isNotEmpty && mappings.containsKey(chordRoot)
+        ? mappings[chordRoot]!
         : chordRoot;
   }
 
   @override
   String convertChordRootToNotation(String chordRoot) {
     var mappings = getFromEnglishTable();
-    return mappings.isNotEmpty && mappings.contains(chordRoot)
-        ? mappings[mappings.indexOf(chordRoot)]
+    return mappings.isNotEmpty && mappings.containsKey(chordRoot)
+        ? mappings[chordRoot]!
         : chordRoot;
   }
 

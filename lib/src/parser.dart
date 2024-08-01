@@ -169,12 +169,3 @@ class ChordsProParser {
     );
   }
 }
-
-
-// [Block(chords: [Chord(rootChord: C, ext: , isKnown: true, originalName: C)], text: , lineEnd: false), 
-// Block(chords: [], text:  , lineEnd: false), 
-// Block(chords: [Chord(rootChord: G, ext: , isKnown: true, originalName: G)], text: , lineEnd: false),
-// Block(chords: [], text:  , lineEnd: false), 
-// Block(chords: [Chord(rootChord: Am, ext: , isKnown: true, originalName: Am)], text: , lineEnd: false), 
-// Block(chords: [], text:  , lineEnd: false), 
-// Block(chords: [Chord(rootChord: Em, ext: , isKnown: true, originalName: Em)], text: , lineEnd: false)]
