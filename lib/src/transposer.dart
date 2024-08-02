@@ -406,27 +406,74 @@ class ChordsProTransposer {
     ]
   ];
 
-  Song transpose(Song song, dynamic value) {
+  // Song transpose(Song song, dynamic value) {
+  //   for (var line in song.getLines()) {
+  //     if (line is Lyrics) {
+  //       for (var block in line.blocks) {
+  //         var chords = block.chords;
+  //         if (chords.isNotEmpty) {
+  //           if (value is int) {
+  //             simpleTranspose(chords, value);
+  //           } else if (song.getKey() != null) {
+  //             completeTranspose(chords, song.getKey()!, value);
+  //             song.setKey(value);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   return song;
+  // }
+
+  // void simpleTranspose(List<Chord> chords, int value) {
+  //   for (var chord in chords) {
+  //     if (!chord.isKnown) continue;
+
+  //     if (value != 0 && value < 12 && value > -12) {
+  //       var suffix = chord.isMinor ? 'm' : '';
+  //       var key =
+  //           simpleTransposeTable[chord.getRootChord().replaceAll('m', '')]!;
+  //       var newKey =
+  //           (key + value < 0) ? 12 + (key + value) : (key + value) % 12;
+  //       chord.transposeTo(simpleTransposeTable.entries
+  //               .firstWhere((entry) => entry.value == newKey)
+  //               .key +
+  //           suffix);
+  //     }
+  //   }
+  // }
+
+  // void completeTranspose(List<Chord> chords, String fromKey, String toKey) {
+  //   for (var chord in chords) {
+  //     var suffix = chord.isMinor ? 'm' : '';
+  //     var rank = transposeTable[transposeChords[fromKey]!]
+  //         .indexOf(chord.getRootChord().replaceAll('m', ''));
+  //     chord.transposeTo(transposeTable[transposeChords[toKey]!][rank] + suffix);
+  //   }
+  // }
+
+  Song transpose(Song song, dynamic value, {bool toSharp = true}) {
     for (var line in song.getLines()) {
       if (line is Lyrics) {
         for (var block in line.blocks) {
           var chords = block.chords;
           if (chords.isNotEmpty) {
             if (value is int) {
-              simpleTranspose(chords, value);
+              simpleTranspose(chords, value, toSharp: toSharp);
             } else if (song.getKey() != null) {
-              completeTranspose(chords, song.getKey()!, value);
+              completeTranspose(chords, song.getKey()!, value,
+                  toSharp: toSharp);
               song.setKey(value);
             }
           }
         }
       }
     }
-
     return song;
   }
 
-  void simpleTranspose(List<Chord> chords, int value) {
+  void simpleTranspose(List<Chord> chords, int value, {bool toSharp = true}) {
     for (var chord in chords) {
       if (!chord.isKnown) continue;
 
@@ -436,20 +483,26 @@ class ChordsProTransposer {
             simpleTransposeTable[chord.getRootChord().replaceAll('m', '')]!;
         var newKey =
             (key + value < 0) ? 12 + (key + value) : (key + value) % 12;
-        chord.transposeTo(simpleTransposeTable.entries
-                .firstWhere((entry) => entry.value == newKey)
-                .key +
-            suffix);
+        var transposedChord = simpleTransposeTable.entries
+            .firstWhere((entry) => entry.value == newKey)
+            .key;
+
+        transposedChord = _getSharpOrFlatChord(transposedChord, toSharp);
+        chord.transposeTo(transposedChord + suffix);
       }
     }
   }
 
-  void completeTranspose(List<Chord> chords, String fromKey, String toKey) {
+  void completeTranspose(List<Chord> chords, String fromKey, String toKey,
+      {bool toSharp = true}) {
     for (var chord in chords) {
       var suffix = chord.isMinor ? 'm' : '';
       var rank = transposeTable[transposeChords[fromKey]!]
           .indexOf(chord.getRootChord().replaceAll('m', ''));
-      chord.transposeTo(transposeTable[transposeChords[toKey]!][rank] + suffix);
+      var transposedChord = transposeTable[transposeChords[toKey]!][rank];
+
+      transposedChord = _getSharpOrFlatChord(transposedChord, toSharp);
+      chord.transposeTo(transposedChord + suffix);
     }
   }
 

@@ -16,8 +16,7 @@ class ChordsProParser {
   ///
   /// @return Song
   Song parse(String text,
-      {bool toSharp = true,
-      List<ChordNotationInterface> sourceNotations = const []}) {
+      [List<ChordNotationInterface> sourceNotations = const []]) {
     List<Line> lines = [];
     List<String> split = text.split(RegExp(r'\r\n|\r|\n'));
     for (var line in split) {
@@ -33,8 +32,7 @@ class ChordsProParser {
             lines.add(Comment(line.substring(1).trim()));
             break;
           default:
-            lines.add(parseLyrics(line,
-                sourceNotations: sourceNotations, toSharp: toSharp));
+            lines.add(parseLyrics(line, sourceNotations));
             break;
         }
       }
@@ -71,8 +69,7 @@ class ChordsProParser {
   ///
   /// @return Lyrics The structured lyrics
   Lyrics parseLyrics(String line,
-      {bool toSharp = true,
-      List<ChordNotationInterface> sourceNotations = const []}) {
+      [List<ChordNotationInterface> sourceNotations = const []]) {
     List<Block> blocks = [];
     List<int> possiblyEmptyBlocks = [];
     bool hasText = false;
@@ -86,11 +83,8 @@ class ChordsProParser {
       if (matchChords.isNotEmpty) {
         blocks.add(Block([], match.group(1)!.trim()));
         for (var chord in matchChords) {
-          var transposedChord = _getSharpOrFlatChord(
-              Chord.fromSlice(chord.group(1)!, sourceNotations).join(),
-              toSharp);
           blocks.add(Block(
-            Chord.fromSlice(transposedChord, sourceNotations),
+            Chord.fromSlice(chord.group(1)!, sourceNotations),
             '',
             lineEnd: true,
           ));
@@ -111,11 +105,8 @@ class ChordsProParser {
         List<String> chordWithText = lineFragment.split(']');
         if (chordWithText.length > 1 && chordWithText[1].isEmpty) {
           hasChords = true;
-          var transposedChord = _getSharpOrFlatChord(
-              Chord.fromSlice(chordWithText[0], sourceNotations).join(),
-              toSharp);
           blocks.add(Block(
-            Chord.fromSlice(transposedChord, sourceNotations),
+            Chord.fromSlice(chordWithText[0], sourceNotations),
             '',
           ));
         } else if (numb == 0 && chordWithText.length == 1) {
@@ -131,11 +122,8 @@ class ChordsProParser {
         } else if (chordWithText.length > 1 &&
             chordWithText[1].startsWith(' ')) {
           hasChords = true;
-          var transposedChord = _getSharpOrFlatChord(
-              Chord.fromSlice(chordWithText[0], sourceNotations).join(),
-              toSharp);
           blocks.add(Block(
-            Chord.fromSlice(transposedChord, sourceNotations),
+            Chord.fromSlice(chordWithText[0], sourceNotations),
             '',
           ));
           blocks.add(Block(
@@ -149,11 +137,8 @@ class ChordsProParser {
           }
         } else {
           hasChords = true;
-          var transposedChord = _getSharpOrFlatChord(
-              Chord.fromSlice(chordWithText[0], sourceNotations).join(),
-              toSharp);
           blocks.add(Block(
-            Chord.fromSlice(transposedChord, sourceNotations),
+            Chord.fromSlice(chordWithText[0], sourceNotations),
             chordWithText.length > 1 ? chordWithText[1] : '',
           ));
           if (RegExp(r'\S')
@@ -182,46 +167,5 @@ class ChordsProParser {
       hasChords: hasChords,
       hasText: hasText,
     );
-  }
-
-  String _getSharpOrFlatChord(String chord, bool toSharp) {
-    final Map<String, int> simpleTransposeTable = {
-      'C': 0,
-      'C#': 1,
-      'Db': 1,
-      'D': 2,
-      'D#': 3,
-      'Eb': 3,
-      'E': 4,
-      'F': 5,
-      'F#': 6,
-      'Gb': 6,
-      'G': 7,
-      'G#': 8,
-      'Ab': 8,
-      'A': 9,
-      'A#': 10,
-      'Bb': 10,
-      'B': 11,
-    };
-
-    var root = chord.replaceAll('m', ''); // Remove 'm' for minor chords
-    if (simpleTransposeTable.containsKey(root)) {
-      var semitone = simpleTransposeTable[root]!;
-      if (toSharp) {
-        // Convert to sharp variant
-        return simpleTransposeTable.entries
-            .firstWhere(
-                (entry) => entry.value == semitone && entry.key.contains('#'))
-            .key;
-      } else {
-        // Convert to flat variant
-        return simpleTransposeTable.entries
-            .firstWhere(
-                (entry) => entry.value == semitone && entry.key.contains('b'))
-            .key;
-      }
-    }
-    return chord; // Return original chord if not found
   }
 }
