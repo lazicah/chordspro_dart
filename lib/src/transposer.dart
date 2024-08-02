@@ -24,7 +24,7 @@ class ChordsProTransposer {
     'B': 11,
   };
 
-  // The table of chord key mappings for $transposetable.
+  // The table of chord key mappings for [transposeTable].
   final Map<String, int> transposeChords = {
     'Fb': 0,
     'Cb': 1,
@@ -451,5 +451,47 @@ class ChordsProTransposer {
           .indexOf(chord.getRootChord().replaceAll('m', ''));
       chord.transposeTo(transposeTable[transposeChords[toKey]!][rank] + suffix);
     }
+  }
+
+  // Method to transpose a song to its sharp or flat variants
+  void transposeToSharpOrFlat(Song song, {bool toSharp = true}) {
+    for (var line in song.getLines()) {
+      if (line is Lyrics) {
+        for (var block in line.blocks) {
+          var chords = block.chords;
+          if (chords.isNotEmpty) {
+            for (var chord in chords) {
+              if (!chord.isKnown) continue;
+
+              var rootChord = chord.getRootChord();
+              var suffix = chord.isMinor ? 'm' : '';
+              var transposedChord = _getSharpOrFlatChord(rootChord, toSharp);
+              chord.transposeTo(transposedChord + suffix);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  String _getSharpOrFlatChord(String chord, bool toSharp) {
+    var root = chord.replaceAll('m', ''); // Remove 'm' for minor chords
+    if (simpleTransposeTable.containsKey(root)) {
+      var semitone = simpleTransposeTable[root]!;
+      if (toSharp) {
+        // Convert to sharp variant
+        return simpleTransposeTable.entries
+            .firstWhere(
+                (entry) => entry.value == semitone && entry.key.contains('#'))
+            .key;
+      } else {
+        // Convert to flat variant
+        return simpleTransposeTable.entries
+            .firstWhere(
+                (entry) => entry.value == semitone && entry.key.contains('b'))
+            .key;
+      }
+    }
+    return chord; // Return original chord if not found
   }
 }
