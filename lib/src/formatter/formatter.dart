@@ -26,6 +26,7 @@ abstract class Formatter {
     metadataStyle = const TextStyle();
     chordBgColor = Colors.white;
     textScaleFactor = 1;
+    chordBgBorderRadius = 0;
 
     if (options.notation != null) {
       notation = options.notation;
