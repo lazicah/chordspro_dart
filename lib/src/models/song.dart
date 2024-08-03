@@ -18,7 +18,7 @@ class Song {
 
   String? getMetadataValue(String key) {
     for (var line in lines) {
-      if (line is Metadata && line.name == key) {
+      if (line is Metadata && line.value!.contains(key)) {
         return line.value;
       }
     }
