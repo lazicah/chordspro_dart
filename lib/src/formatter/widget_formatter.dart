@@ -6,7 +6,6 @@ import 'package:chordspro_dart/src/models/line/line.dart';
 import 'package:chordspro_dart/src/models/line/lyrics.dart';
 import 'package:chordspro_dart/src/models/line/metadata.dart';
 import 'package:chordspro_dart/src/models/song.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class WidgetFormatter extends Formatter implements FormatterInterface {

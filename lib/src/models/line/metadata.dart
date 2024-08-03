@@ -2,12 +2,16 @@ import 'package:chordspro_dart/src/models/line/line.dart';
 
 class Metadata extends Line {
   final String name;
-  final String? value;
+  String? value;
 
   Metadata(String name, this.value) : name = _convertToFullName(name);
 
   String getNameSlug() {
     return _slugify(name);
+  }
+
+  void setValue(String value) {
+    this.value = value;
   }
 
   static String _convertToFullName(String name) {

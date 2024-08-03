@@ -9,8 +9,8 @@ class Song {
 
   String? getMetadataKey() {
     for (var line in lines) {
-      if (line is Metadata && (line).name == 'key') {
-        return (line).value;
+      if (line is Metadata && line.name == 'key') {
+        return line.value;
       }
     }
     return null;
@@ -22,6 +22,11 @@ class Song {
 
   void setKey(String value) {
     _key = value;
+    for (var line in lines) {
+      if (line is Metadata && line.name == 'key') {
+        line.setValue(value);
+      }
+    }
   }
 
   List<Line> getLines() {

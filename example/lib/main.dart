@@ -78,43 +78,47 @@ Let's finish this song. [G] It's the end of the show.
   List<Widget> widgets = [];
   int transpose = 0;
 
+  late Song originalSong;
+
   @override
   void initState() {
     super.initState();
     parseData();
   }
 
+  Song getSong() {
+    return originalSong;
+  }
+
   void parseData() {
-    final song = parser.parse(sampleSong, keyTonal: KeyTonal.original);
-    widgets = widgetFormatter.format(song);
+    originalSong = parser.parse(sampleSong, keyTonal: KeyTonal.original);
+    widgets = widgetFormatter.format(originalSong);
     transpose = 0;
     setState(() {});
   }
 
   void transposeUp() {
-    final song = parser.parse(sampleSong);
-    transpose++;
-    final transposedSong =
-        transposer.transpose(song, transpose, keyTonal: KeyTonal.original);
-    widgets = widgetFormatter.format(transposedSong);
+    final song = getSong();
+
+    transposer.transpose(song, 1, keyTonal: KeyTonal.sharp);
+    widgets = widgetFormatter.format(song);
     setState(() {});
   }
 
   void transposeDown() {
-    final song = parser.parse(sampleSong);
-    transpose--;
-    final transposedSong =
-        transposer.transpose(song, transpose, keyTonal: KeyTonal.original);
-    widgets = widgetFormatter.format(transposedSong);
+    final song = getSong();
+
+    transposer.transpose(song, -1, keyTonal: KeyTonal.sharp);
+    widgets = widgetFormatter.format(song);
     setState(() {});
   }
 
   void transposeToKey() {
-    final song = parser.parse(sampleSong);
+    final song = parser.parse(sampleSong, keyTonal: KeyTonal.original);
     transpose = 0;
-    final transposedSong =
-        transposer.transpose(song, 'F#', keyTonal: KeyTonal.flat);
-    widgets = widgetFormatter.format(transposedSong);
+    transposer.transpose(song, 'Bb');
+    originalSong = song;
+    widgets = widgetFormatter.format(originalSong);
     setState(() {});
   }
 
@@ -131,6 +135,13 @@ Let's finish this song. [G] It's the end of the show.
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+              onPressed: () {
+                transposeToKey();
+              },
+              icon: Icon(Icons.settings))
+        ],
       ),
       floatingActionButton: Row(
         mainAxisSize: MainAxisSize.min,

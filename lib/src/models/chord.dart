@@ -94,12 +94,7 @@ class Chord {
     }
     var chords = text.split('/');
     return chords.map((chord) {
-      // if (keyTonal != KeyTonal.original) {
-      //   final transposedChord =
-      //       _getSharpOrFlatChord(chord, keyTonal == KeyTonal.sharp);
-      //   return Chord(transposedChord, sourceNotations: notations);
-      // }
-      return Chord(chord, sourceNotations: notations);
+      return Chord(chord, sourceNotations: notations, keyTonal: keyTonal);
     }).toList();
   }
 
@@ -148,47 +143,29 @@ class Chord {
   }
 
   static String _getSharpOrFlatChord(String chord, bool toSharp) {
-    // The table of chord key mappings to semitones.
-    final Map<String, int> simpleTransposeTable = {
-      'C': 0,
-      'C#': 1,
-      'Db': 1,
-      'D': 2,
-      'D#': 3,
-      'Eb': 3,
-      'E': 4,
-      'F': 5,
-      'F#': 6,
-      'Gb': 6,
-      'G': 7,
-      'G#': 8,
-      'Ab': 8,
-      'A': 9,
-      'A#': 10,
-      'Bb': 10,
-      'B': 11,
+    var root = chord.replaceAll('m', '');
+    // Define sharp and flat equivalents
+    final Map<String, String> flatToSharp = {
+      'Bb': 'A#',
+      'Db': 'C#',
+      'Eb': 'D#',
+      'Gb': 'F#',
+      'Ab': 'G#',
+    };
+    final Map<String, String> sharpToFlat = {
+      'A#': 'Bb',
+      'C#': 'Db',
+      'D#': 'Eb',
+      'F#': 'Gb',
+      'G#': 'Ab',
     };
 
-    var root = chord.replaceAll('m', ''); // Remove 'm' for minor chords
-    print(root);
-    var semitone = simpleTransposeTable[root]!;
-
-    var transposedChord = root;
-    if (toSharp) {
-      transposedChord = simpleTransposeTable.entries
-          .firstWhere(
-            (entry) => entry.value == semitone && entry.key.contains('#'),
-            orElse: () => MapEntry(transposedChord, -1),
-          )
-          .key;
-    } else {
-      transposedChord = simpleTransposeTable.entries
-          .firstWhere(
-            (entry) => entry.value == semitone && entry.key.contains('b'),
-            orElse: () => MapEntry(transposedChord, -1),
-          )
-          .key;
+    if (toSharp && flatToSharp.containsKey(root)) {
+      return flatToSharp[root]!;
+    } else if (!toSharp && sharpToFlat.containsKey(root)) {
+      return sharpToFlat[root]!;
     }
-    return transposedChord; // Return original chord if not found
+
+    return root; // If no conversion is needed, return the original chord
   }
 }
