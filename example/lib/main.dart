@@ -51,7 +51,7 @@ Sometimes you write text
 And there's no more room for chords
 
 {comment: Sometimes you play music without any words}
-[C] [G] [Am] [Em]
+[C] [G] [Am] [Em] [G/F#m]
 
 You don't know where the chords are? ~ [F] [C]
 You don't have to know ~ [G] [G/F#]
@@ -85,15 +85,17 @@ Let's finish this song. [G] It's the end of the show.
   }
 
   void parseData() {
-    final song = parser.parse(sampleSong);
+    final song = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
     widgets = widgetFormatter.format(song);
+    transpose = 0;
     setState(() {});
   }
 
   void transposeUp() {
     final song = parser.parse(sampleSong);
     transpose++;
-    final transposedSong = transposer.transpose(song, transpose);
+    final transposedSong =
+        transposer.transpose(song, transpose, keyTonal: KeyTonal.sharp);
     widgets = widgetFormatter.format(transposedSong);
     setState(() {});
   }
@@ -101,7 +103,8 @@ Let's finish this song. [G] It's the end of the show.
   void transposeDown() {
     final song = parser.parse(sampleSong);
     transpose--;
-    final transposedSong = transposer.transpose(song, transpose);
+    final transposedSong =
+        transposer.transpose(song, transpose, keyTonal: KeyTonal.sharp);
     widgets = widgetFormatter.format(transposedSong);
     setState(() {});
   }
@@ -109,9 +112,16 @@ Let's finish this song. [G] It's the end of the show.
   void transposeToKey() {
     final song = parser.parse(sampleSong);
     transpose = 0;
-    final transposedSong = transposer.transpose(song, 'F#');
+    final transposedSong =
+        transposer.transpose(song, 'F#', keyTonal: KeyTonal.flat);
     widgets = widgetFormatter.format(transposedSong);
     setState(() {});
+  }
+
+  @override
+  void reassemble() {
+    parseData();
+    super.reassemble();
   }
 
   @override

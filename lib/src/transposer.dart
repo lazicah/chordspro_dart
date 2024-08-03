@@ -1,4 +1,5 @@
 import 'package:chordspro_dart/src/models/chord.dart';
+import 'package:chordspro_dart/src/models/key_tonal.dart';
 import 'package:chordspro_dart/src/models/line/lyrics.dart';
 import 'package:chordspro_dart/src/models/song.dart';
 
@@ -23,6 +24,26 @@ class ChordsProTransposer {
     'Bb': 10,
     'B': 11,
   };
+
+  // final Map<String, int> simpleMinorTransposeTable = {
+  //   'Am': 0,
+  //   'A#m': 1,
+  //   'Bbm': 1,
+  //   'Bm': 2,
+  //   'Cm': 3,
+  //   'C#m': 4,
+  //   'Dbm': 4,
+  //   'Dm': 5,
+  //   'Ebm': 6,
+  //   'D#m': 6,
+  //   'Em': 7,
+  //   'Fm': 8,
+  //   'F#m': 9,
+  //   'Gbm': 9,
+  //   'Gm': 10,
+  //   'G#m': 11,
+  //   'Abm': 11,
+  // };
 
   // The table of chord key mappings for [transposeTable].
   final Map<String, int> transposeChords = {
@@ -406,64 +427,22 @@ class ChordsProTransposer {
     ]
   ];
 
-  // Song transpose(Song song, dynamic value) {
-  //   for (var line in song.getLines()) {
-  //     if (line is Lyrics) {
-  //       for (var block in line.blocks) {
-  //         var chords = block.chords;
-  //         if (chords.isNotEmpty) {
-  //           if (value is int) {
-  //             simpleTranspose(chords, value);
-  //           } else if (song.getKey() != null) {
-  //             completeTranspose(chords, song.getKey()!, value);
-  //             song.setKey(value);
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   return song;
-  // }
-
-  // void simpleTranspose(List<Chord> chords, int value) {
-  //   for (var chord in chords) {
-  //     if (!chord.isKnown) continue;
-
-  //     if (value != 0 && value < 12 && value > -12) {
-  //       var suffix = chord.isMinor ? 'm' : '';
-  //       var key =
-  //           simpleTransposeTable[chord.getRootChord().replaceAll('m', '')]!;
-  //       var newKey =
-  //           (key + value < 0) ? 12 + (key + value) : (key + value) % 12;
-  //       chord.transposeTo(simpleTransposeTable.entries
-  //               .firstWhere((entry) => entry.value == newKey)
-  //               .key +
-  //           suffix);
-  //     }
-  //   }
-  // }
-
-  // void completeTranspose(List<Chord> chords, String fromKey, String toKey) {
-  //   for (var chord in chords) {
-  //     var suffix = chord.isMinor ? 'm' : '';
-  //     var rank = transposeTable[transposeChords[fromKey]!]
-  //         .indexOf(chord.getRootChord().replaceAll('m', ''));
-  //     chord.transposeTo(transposeTable[transposeChords[toKey]!][rank] + suffix);
-  //   }
-  // }
-
-  Song transpose(Song song, dynamic value, {bool toSharp = true}) {
+  Song transpose(Song song, dynamic value,
+      {KeyTonal keyTonal = KeyTonal.original}) {
     for (var line in song.getLines()) {
       if (line is Lyrics) {
         for (var block in line.blocks) {
           var chords = block.chords;
           if (chords.isNotEmpty) {
             if (value is int) {
-              simpleTranspose(chords, value, toSharp: toSharp);
+              simpleTranspose(chords, value, keyTonal: keyTonal);
             } else if (song.getKey() != null) {
-              completeTranspose(chords, song.getKey()!, value,
-                  toSharp: toSharp);
+              completeTranspose(
+                chords,
+                song.getKey()!,
+                value,
+                keyTonal: keyTonal,
+              );
               song.setKey(value);
             }
           }
@@ -473,7 +452,8 @@ class ChordsProTransposer {
     return song;
   }
 
-  void simpleTranspose(List<Chord> chords, int value, {bool toSharp = true}) {
+  void simpleTranspose(List<Chord> chords, int value,
+      {KeyTonal keyTonal = KeyTonal.original}) {
     for (var chord in chords) {
       if (!chord.isKnown) continue;
 
@@ -483,25 +463,43 @@ class ChordsProTransposer {
             simpleTransposeTable[chord.getRootChord().replaceAll('m', '')]!;
         var newKey =
             (key + value < 0) ? 12 + (key + value) : (key + value) % 12;
+
         var transposedChord = simpleTransposeTable.entries
             .firstWhere((entry) => entry.value == newKey)
             .key;
 
-        transposedChord = _getSharpOrFlatChord(transposedChord, toSharp);
+        if (keyTonal != KeyTonal.original) {
+          transposedChord =
+              _getSharpOrFlatChord(transposedChord, keyTonal == KeyTonal.sharp);
+        }
+
         chord.transposeTo(transposedChord + suffix);
+      } else {
+        if (keyTonal != KeyTonal.original) {
+          var suffix = chord.isMinor ? 'm' : '';
+
+          final transposedChord = _getSharpOrFlatChord(
+              chord.getRootChord().replaceAll('m', ''),
+              keyTonal == KeyTonal.sharp);
+
+          chord.transposeTo(transposedChord + suffix);
+        }
       }
     }
   }
 
   void completeTranspose(List<Chord> chords, String fromKey, String toKey,
-      {bool toSharp = true}) {
+      {KeyTonal keyTonal = KeyTonal.original}) {
     for (var chord in chords) {
       var suffix = chord.isMinor ? 'm' : '';
       var rank = transposeTable[transposeChords[fromKey]!]
           .indexOf(chord.getRootChord().replaceAll('m', ''));
       var transposedChord = transposeTable[transposeChords[toKey]!][rank];
 
-      transposedChord = _getSharpOrFlatChord(transposedChord, toSharp);
+      if (keyTonal != KeyTonal.original) {
+        transposedChord =
+            _getSharpOrFlatChord(transposedChord, keyTonal == KeyTonal.sharp);
+      }
       chord.transposeTo(transposedChord + suffix);
     }
   }
@@ -529,22 +527,24 @@ class ChordsProTransposer {
 
   String _getSharpOrFlatChord(String chord, bool toSharp) {
     var root = chord.replaceAll('m', ''); // Remove 'm' for minor chords
-    if (simpleTransposeTable.containsKey(root)) {
-      var semitone = simpleTransposeTable[root]!;
-      if (toSharp) {
-        // Convert to sharp variant
-        return simpleTransposeTable.entries
-            .firstWhere(
-                (entry) => entry.value == semitone && entry.key.contains('#'))
-            .key;
-      } else {
-        // Convert to flat variant
-        return simpleTransposeTable.entries
-            .firstWhere(
-                (entry) => entry.value == semitone && entry.key.contains('b'))
-            .key;
-      }
+    var semitone = simpleTransposeTable[root]!;
+
+    var transposedChord = root;
+    if (toSharp) {
+      transposedChord = simpleTransposeTable.entries
+          .firstWhere(
+            (entry) => entry.value == semitone && entry.key.contains('#'),
+            orElse: () => MapEntry(transposedChord, -1),
+          )
+          .key;
+    } else {
+      transposedChord = simpleTransposeTable.entries
+          .firstWhere(
+            (entry) => entry.value == semitone && entry.key.contains('b'),
+            orElse: () => MapEntry(transposedChord, -1),
+          )
+          .key;
     }
-    return chord; // Return original chord if not found
+    return transposedChord; // Return original chord if not found
   }
 }

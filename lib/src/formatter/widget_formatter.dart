@@ -147,7 +147,22 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
           textScaler: TextScaler.linear(textScaleFactor),
         ));
       } else if (lyrics.hasChords) {
-        line += chord;
+        if (chord.isNotEmpty) {
+          rows1.add(FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              color: chordBgColor,
+              child: Text(
+                chord,
+                style: chordStyle,
+                textScaler: TextScaler.linear(textScaleFactor),
+              ),
+            ),
+          ));
+        } else {
+          rows1.add(const SizedBox());
+        }
       } else if (lyrics.hasText) {
         line += text;
       }
@@ -158,15 +173,26 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
       line += lineText;
     }
 
-    if (kDebugMode) {
-      print(line);
-    }
     if (lyrics.hasChords && lyrics.hasText) {
+      if (rows1.isNotEmpty && rows2.isNotEmpty) {
+        rows.add(TableRow(children: rows1));
+        rows.add(TableRow(children: rows2));
+        return Table(
+          children: rows,
+          defaultColumnWidth: const IntrinsicColumnWidth(),
+          border: TableBorder.all(
+            width: 4,
+            color: Colors.transparent,
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    } else if (lyrics.hasChords) {
       rows.add(TableRow(children: rows1));
-      rows.add(TableRow(children: rows2));
       return Table(
         children: rows,
-        defaultColumnWidth: const IntrinsicColumnWidth(),
+        // defaultColumnWidth: const IntrinsicColumnWidth(),
         border: TableBorder.all(
           width: 4,
           color: Colors.transparent,
