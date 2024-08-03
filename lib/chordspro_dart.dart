@@ -11,3 +11,4 @@ export 'src/notation/utf_chord_notation.dart';
 export 'src/models/key_tonal.dart';
 export 'src/transposer.dart';
 export 'src/parser.dart';
+export 'src/models/song.dart';
