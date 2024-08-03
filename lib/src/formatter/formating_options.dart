@@ -15,6 +15,7 @@ class FormatingOptions {
   TextStyle? metadataStyle;
   Color? chordBgColor;
   double? textScaleFactor;
+  double? chordBgBorderRadius;
 
   FormatingOptions({
     this.notation,
@@ -27,6 +28,7 @@ class FormatingOptions {
     this.metadataStyle,
     this.chordBgColor,
     this.textScaleFactor,
+    this.chordBgBorderRadius,
   });
 
   FormatingOptions.empty() : this();

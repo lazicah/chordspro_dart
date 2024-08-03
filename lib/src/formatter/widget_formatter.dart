@@ -151,7 +151,9 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
             fit: BoxFit.scaleDown,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              color: chordBgColor,
+              decoration: BoxDecoration(
+                  color: chordBgColor,
+                  borderRadius: BorderRadius.circular(chordBgBorderRadius)),
               child: Text(
                 chord,
                 style: chordStyle,

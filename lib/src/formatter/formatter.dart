@@ -13,6 +13,7 @@ abstract class Formatter {
   TextStyle metadataStyle = const TextStyle();
   Color chordBgColor = Colors.white;
   double textScaleFactor = 1;
+  double chordBgBorderRadius = 0;
 
   void setOptions(FormatingOptions options) {
     notation = null;
@@ -62,6 +63,10 @@ abstract class Formatter {
 
     if (options.textScaleFactor != null) {
       textScaleFactor = options.textScaleFactor!;
+    }
+
+    if (options.chordBgBorderRadius != null) {
+      chordBgBorderRadius = options.chordBgBorderRadius!;
     }
   }
 }
