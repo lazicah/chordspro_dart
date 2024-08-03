@@ -85,7 +85,7 @@ Let's finish this song. [G] It's the end of the show.
   }
 
   void parseData() {
-    final song = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
+    final song = parser.parse(sampleSong, keyTonal: KeyTonal.original);
     widgets = widgetFormatter.format(song);
     transpose = 0;
     setState(() {});
@@ -95,7 +95,7 @@ Let's finish this song. [G] It's the end of the show.
     final song = parser.parse(sampleSong);
     transpose++;
     final transposedSong =
-        transposer.transpose(song, transpose, keyTonal: KeyTonal.sharp);
+        transposer.transpose(song, transpose, keyTonal: KeyTonal.original);
     widgets = widgetFormatter.format(transposedSong);
     setState(() {});
   }
@@ -104,7 +104,7 @@ Let's finish this song. [G] It's the end of the show.
     final song = parser.parse(sampleSong);
     transpose--;
     final transposedSong =
-        transposer.transpose(song, transpose, keyTonal: KeyTonal.sharp);
+        transposer.transpose(song, transpose, keyTonal: KeyTonal.original);
     widgets = widgetFormatter.format(transposedSong);
     setState(() {});
   }
