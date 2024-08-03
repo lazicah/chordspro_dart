@@ -16,6 +16,15 @@ class Song {
     return null;
   }
 
+  String? getMetadataValue(String key) {
+    for (var line in lines) {
+      if (line is Metadata && line.name == key) {
+        return line.value;
+      }
+    }
+    return null;
+  }
+
   String? getKey() {
     return _key ?? getMetadataKey();
   }
