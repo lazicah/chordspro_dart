@@ -33,40 +33,55 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final sampleSong = """{t:A Nice Sample Song}
-{st:Grzegorz Pietrzak}
-{key:C}
+  final sampleSong = """"
+{key: F}
+Details:
+Current: Key- [F] ; 1st Intro Note- [C] ; 1st Verse Note- [C] ; Vocal Range- [C] – [F] (1.5 oct)
+Original: Tempo- 4/4 125 BPM; Key- F; 1st Intro Note- C; 1st Verse Note- C; Vocal Range- C3 – F4
+Play in C: Capo- 5; 1st Intro Note- G; 1st Verse Note- G
+Play in G: Capo- 10; 1st Intro Note- D; 1st Verse Note- D
 
-# Let's start it!
-[C]Let's sing this [G]song [Am]together [Em]aloud
-[F]It's an [C]example [Dm]with some nice [G]sound
+Intro:
+[F]- - - [C7]- | [F]- - - - |
 
-{soc: Chorus}
-[Bb]Whenever you [Am7]need to [Bb]format your [Am7]chords
-[Dm]The solution to your [F]problems [G]is very close
-{eoc}
+Verse (2x):
+Ki [F]heim, ki heim cha[C7]yeinu
+V'ō[C7]rech yomei[F]nu
+Uvo[F]hem, uvohem ne-[C7]--ge
+Uvo[C7]hem nege yōmom voloi[F]lo
 
-{comment: Now we recite some text}
-Sometimes you write text
-And there's no more room for chords
+Chorus (2x):
+Ki [F]heim, ki heim cha[Bb]yei[F]nu
+[Bb] V'ōrech [G7(b9)]yomei[F]nu
+Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
+Uvo[C7]hem nege yōmom voloi[F]lo
 
-{comment: Sometimes you play music without any words}
-[C] [G] [Am] [Em] [G/F#m]
+Interlude 1 (2x):
+[F]- - - - | [C7]- - - - | - - - - | [F6]- - - - |
+[F]- - - - | [C7]- - - - | - - - - | [F6]- - - - |
 
-You don't know where the chords are? ~ [F] [C]
-You don't have to know ~ [G] [G/F#]
+Interlude 2 (2x):
+[F]- - - - | [Bb]- - [F]- - | [Bb]- - [G7(b9)]- - | [F]- - - - | 
+[Gm]- - - [C7]- | [Bb]- - [F]- - | [C7]- - - - | [F]- - - - |
 
-{sot: Outro}
-E-12---------------------|
-B----11-12---------------|
-G----------11s13-14------|
-D-------------------10-12|
-A------------------------|
-E------------------------|
-{eot}
+Verse (2x):
+Ki [F]heim, ki heim cha[C7]yeinu
+V'ō[C7]rech yomei[F]nu
+Uvo[F]hem, uvohem ne-[C7]--ge
+Uvo[C7]hem nege yōmom voloi[F]lo
 
-{comment: The end}
-Let's finish this song. [G] It's the end of the show.
+Chorus:
+Ki [F]heim, ki heim cha[Bb]yei[F]nu
+[Bb] V'ō[G7(b9)]rech yomei[F]nu
+Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
+Uvo[C7]hem nege yōmom voloi[F]lo
+
+Chorus to Outro:
+Ki [F]heim, ki heim cha[Bb]yei[F]nu
+[Bb] V'ō[G7(b9)]rech yomei[F]nu
+Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
+[C7]Uvohem nege, uvohem nege
+[C7]Uvohem nege yōmom voloi[F]lo | - - - - |"
 """;
 
   final parser = ChordsProParser();
@@ -114,10 +129,11 @@ Let's finish this song. [G] It's the end of the show.
   }
 
   void transposeToKey() {
-    final song = parser.parse(sampleSong, keyTonal: KeyTonal.original);
+    final newSong = parser.parse(sampleSong, keyTonal: KeyTonal.original);
     transpose = 0;
-    transposer.transpose(song, 'Bb');
-    originalSong = song;
+    print('main');
+    transposer.transpose(newSong, 'G#');
+    originalSong = newSong;
     widgets = widgetFormatter.format(originalSong);
     setState(() {});
   }

@@ -539,9 +539,10 @@ class ChordsProTransposer {
 
   void completeTranspose(List<Chord> chords, String fromKey, String toKey,
       {KeyTonal keyTonal = KeyTonal.original}) {
+    print('object');
     for (var chord in chords) {
       var suffix = chord.isMinor ? 'm' : '';
-
+      print("Working on: ${chord.getRootChord()}");
       var rank = transposeTable[transposeChords[fromKey]!]
           .indexOf(chord.getRootChord().replaceAll('m', ''));
       var transposedChord = transposeTable[transposeChords[toKey]!][rank];
