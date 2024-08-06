@@ -150,7 +150,7 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
           rows1.add(const SizedBox());
         }
         rows2.add(Padding(
-          padding: EdgeInsets.only(bottom: lineSpacing, left: 8),
+          padding: EdgeInsets.only(bottom: lineSpacing, left: 12),
           child: Text(
             text,
             style: textStyle,

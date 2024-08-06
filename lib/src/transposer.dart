@@ -1,5 +1,7 @@
+import 'package:chordspro_dart/src/models/block.dart';
 import 'package:chordspro_dart/src/models/chord.dart';
 import 'package:chordspro_dart/src/models/key_tonal.dart';
+import 'package:chordspro_dart/src/models/line/line.dart';
 import 'package:chordspro_dart/src/models/line/lyrics.dart';
 import 'package:chordspro_dart/src/models/song.dart';
 
@@ -474,15 +476,16 @@ class ChordsProTransposer {
     ]
   ];
 
-  Song transpose(Song song, dynamic value,
-      {KeyTonal keyTonal = KeyTonal.original}) {
+  transpose(Song song, dynamic value, {KeyTonal keyTonal = KeyTonal.original}) {
+    List<Block> blocks = [];
     for (var line in song.getLines()) {
       if (line is Lyrics) {
         for (var block in line.blocks) {
           var chords = block.chords;
           if (chords.isNotEmpty) {
             if (value is int) {
-              simpleTranspose(chords, value, keyTonal: keyTonal);
+              blocks.add(block);
+              simpleTranspose(song, chords, value, keyTonal: keyTonal);
             } else if (song.getKey() != null) {
               completeTranspose(
                 chords,
@@ -497,11 +500,13 @@ class ChordsProTransposer {
     }
     if (value is! int) {
       song.setKey(value);
+    } else {
+      final firstBlock = blocks.first;
+      song.setKey(firstBlock.chords.first.getRootChord());
     }
-    return song;
   }
 
-  void simpleTranspose(List<Chord> chords, int value,
+  void simpleTranspose(Song song, List<Chord> chords, int value,
       {KeyTonal keyTonal = KeyTonal.original}) {
     for (var chord in chords) {
       if (!chord.isKnown) continue;
@@ -539,10 +544,8 @@ class ChordsProTransposer {
 
   void completeTranspose(List<Chord> chords, String fromKey, String toKey,
       {KeyTonal keyTonal = KeyTonal.original}) {
-    print('object');
     for (var chord in chords) {
       var suffix = chord.isMinor ? 'm' : '';
-      print("Working on: ${chord.getRootChord()}");
       var rank = transposeTable[transposeChords[fromKey]!]
           .indexOf(chord.getRootChord().replaceAll('m', ''));
       var transposedChord = transposeTable[transposeChords[toKey]!][rank];

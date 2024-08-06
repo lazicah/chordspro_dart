@@ -185,10 +185,10 @@ Performer- Benny Friedman; Album- Singles"
   }
 
   void transposeToKey() {
-    final newSong = parser.parse(sampleSong, keyTonal: KeyTonal.original);
+    final newSong = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
     transpose = 0;
-    print('main');
-    transposer.transpose(newSong, 'G#');
+
+    transposer.transpose(newSong, 'F#', keyTonal: KeyTonal.sharp);
     originalSong = newSong;
     widgets = widgetFormatter.format(originalSong);
     setState(() {});
@@ -203,7 +203,7 @@ Performer- Benny Friedman; Album- Singles"
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffE7E6E6),
+      backgroundColor: const Color(0xffE7E6E6),
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -212,7 +212,7 @@ Performer- Benny Friedman; Album- Singles"
               onPressed: () {
                 transposeToKey();
               },
-              icon: Icon(Icons.settings))
+              icon: const Icon(Icons.settings))
         ],
       ),
       floatingActionButton: Row(
@@ -220,11 +220,11 @@ Performer- Benny Friedman; Album- Singles"
         children: [
           FloatingActionButton(
             onPressed: transposeDown,
-            child: Text('-'),
+            child: const Text('-'),
           ),
           FloatingActionButton(
             onPressed: transposeUp,
-            child: Text('+'),
+            child: const Text('+'),
           ),
         ],
       ),
