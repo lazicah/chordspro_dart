@@ -2,6 +2,65 @@ import 'package:chordspro_dart/chordspro_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
+const minorKeys = [
+  "Am",
+  "Bbm",
+  "Bm",
+  "Cm",
+  "C#m",
+  "Dm",
+  "D#m",
+  "Em",
+  "Fm",
+  "F#m",
+  "Gm",
+  "G#m"
+];
+
+const majorKeys = [
+  "C",
+  "Db",
+  "D",
+  "Eb",
+  "E",
+  "F",
+  "F#",
+  "G",
+  "Ab",
+  "A",
+  "Bb",
+  "B"
+];
+
+final flats = [
+  'Am',
+  'Bbm',
+  'Cm',
+  'Dm',
+  'Fm',
+  'Gm',
+  'C',
+  'Db',
+  'Eb',
+  'F',
+  'Ab',
+  'Bb',
+];
+final sharps = [
+  'Bm',
+  'C#m',
+  'D#m',
+  'Em',
+  'F#m',
+  'G#m',
+  'D',
+  'E',
+  'F#',
+  'G',
+  'A',
+  'B'
+];
+
 void main() {
   runApp(const MyApp());
 }
@@ -162,7 +221,7 @@ Performer- Benny Friedman; Album- Singles"
   }
 
   void parseData() {
-    originalSong = parser.parse(sampleSong, keyTonal: KeyTonal.original);
+    originalSong = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
     widgets = widgetFormatter.format(originalSong);
     transpose = 0;
     setState(() {});
@@ -170,26 +229,61 @@ Performer- Benny Friedman; Album- Singles"
 
   void transposeUp() {
     final song = getSong();
+    final newKey = _transposeUp(song.getKey()!);
 
-    transposer.transpose(song, 1, keyTonal: KeyTonal.sharp);
-    widgets = widgetFormatter.format(song);
-    setState(() {});
+    if (newKey != null) {
+      transposeToKey(newKey);
+    }
   }
 
   void transposeDown() {
     final song = getSong();
+    final newKey = _transposeDown(song.getKey()!);
 
-    transposer.transpose(song, -1, keyTonal: KeyTonal.sharp);
-    widgets = widgetFormatter.format(song);
-    setState(() {});
+    if (newKey != null) {
+      transposeToKey(newKey);
+    }
   }
 
-  void transposeToKey() {
-    final newSong = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
-    transpose = 0;
+  String? _transposeUp(String key) {
+    int minorIndex = minorKeys.indexOf(key);
+    if (minorIndex != -1) {
+      // If key is in minor keys
+      return minorKeys[(minorIndex + 1) % minorKeys.length];
+    }
 
-    transposer.transpose(newSong, 'F#', keyTonal: KeyTonal.sharp);
-    originalSong = newSong;
+    int majorIndex = majorKeys.indexOf(key);
+    if (majorIndex != -1) {
+      // If key is in major keys
+      return majorKeys[(majorIndex + 1) % majorKeys.length];
+    }
+
+    // Key not found in either array
+    return null;
+  }
+
+  String? _transposeDown(String key) {
+    int minorIndex = minorKeys.indexOf(key);
+    if (minorIndex != -1) {
+      // If key is in minor keys
+      return minorKeys[(minorIndex - 1 + minorKeys.length) % minorKeys.length];
+    }
+
+    int majorIndex = majorKeys.indexOf(key);
+    if (majorIndex != -1) {
+      // If key is in major keys
+      return majorKeys[(majorIndex - 1 + majorKeys.length) % majorKeys.length];
+    }
+
+    // Key not found in either array
+    return null;
+  }
+
+  void transposeToKey(String key) {
+    final song = getSong();
+    transposer.transpose(song, key,
+        keyTonal: sharps.contains(key) ? KeyTonal.sharp : KeyTonal.flat);
+    originalSong = song;
     widgets = widgetFormatter.format(originalSong);
     setState(() {});
   }
@@ -210,7 +304,7 @@ Performer- Benny Friedman; Album- Singles"
         actions: [
           IconButton(
               onPressed: () {
-                transposeToKey();
+                transposeToKey('G#');
               },
               icon: const Icon(Icons.settings))
         ],

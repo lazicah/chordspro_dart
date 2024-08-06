@@ -915,8 +915,12 @@ class ChordsProTransposer {
       {KeyTonal keyTonal = KeyTonal.original}) {
     for (var chord in chords) {
       var suffix = chord.isMinor ? 'm' : '';
+      print('Root chord: ${chord.getRootChord().replaceAll('m', '')}');
+      print('From: $fromKey');
+      print('To: $toKey');
       var rank = transposeTable[transposeChords[fromKey]!]
           .indexOf(chord.getRootChord().replaceAll('m', ''));
+      print('Rank: $rank');
       var transposedChord = transposeTable[transposeChords[toKey]!][rank];
 
       if (keyTonal != KeyTonal.original) {
