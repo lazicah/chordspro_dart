@@ -7,7 +7,7 @@ abstract class Formatter {
   bool noChords = false;
   List<String> ignoreMetadata = [];
   double? breakPoint;
-  double lineSpacing = 5;
+  double lineSpacing = 8;
   TextStyle textStyle = const TextStyle();
   TextStyle chordStyle = const TextStyle();
   TextStyle metadataStyle = const TextStyle();
@@ -20,7 +20,7 @@ abstract class Formatter {
     noChords = false;
     ignoreMetadata = [];
     breakPoint = null;
-    lineSpacing = 5;
+    lineSpacing = 8;
     textStyle = const TextStyle();
     chordStyle = const TextStyle();
     metadataStyle = const TextStyle();

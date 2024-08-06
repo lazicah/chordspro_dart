@@ -125,25 +125,37 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
         }
       } else if (lyrics.hasChords && lyrics.hasText) {
         if (chord.isNotEmpty) {
-          rows1.add(FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              color: chordBgColor,
-              child: Text(
-                chord,
-                style: chordStyle,
-                textScaler: TextScaler.linear(textScaleFactor),
+          rows1.add(Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: lineSpacing, left: 8),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(chordBgBorderRadius),
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: chordBgColor,
+                  ),
+                  child: Text(
+                    chord,
+                    style: chordStyle,
+                    textScaler: TextScaler.linear(textScaleFactor),
+                  ),
+                ),
               ),
             ),
           ));
         } else {
           rows1.add(const SizedBox());
         }
-        rows2.add(Text(
-          text,
-          style: textStyle,
-          textScaler: TextScaler.linear(textScaleFactor),
+        rows2.add(Padding(
+          padding: EdgeInsets.only(bottom: lineSpacing, left: 8),
+          child: Text(
+            text,
+            style: textStyle,
+            textScaler: TextScaler.linear(textScaleFactor),
+          ),
         ));
       } else if (lyrics.hasChords) {
         if (chord.isNotEmpty) {
@@ -181,10 +193,6 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
         return Table(
           children: rows,
           defaultColumnWidth: const IntrinsicColumnWidth(),
-          border: TableBorder.all(
-            width: 4,
-            color: Colors.transparent,
-          ),
         );
       } else {
         return const SizedBox.shrink();
@@ -194,16 +202,17 @@ class WidgetFormatter extends Formatter implements FormatterInterface {
       return Table(
         children: rows,
         // defaultColumnWidth: const IntrinsicColumnWidth(),
-        border: TableBorder.all(
-          width: 4,
-          color: Colors.transparent,
-        ),
       );
     } else {
-      return Text(
-        line,
-        style: textStyle,
-        textScaler: TextScaler.linear(textScaleFactor),
+      return Padding(
+        padding: EdgeInsets.only(
+          bottom: lineSpacing,
+        ),
+        child: Text(
+          line,
+          style: textStyle,
+          textScaler: TextScaler.linear(textScaleFactor),
+        ),
       );
     }
   }

@@ -34,54 +34,110 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final sampleSong = """"
-{key: F}
+{key: B}
+"These chords have not yet been edited or polished, but you should still find them useful.  I Hope you enjoy!
+
 Details:
-Current: Key- [F] ; 1st Intro Note- [C] ; 1st Verse Note- [C] ; Vocal Range- [C] – [F] (1.5 oct)
-Original: Tempo- 4/4 125 BPM; Key- F; 1st Intro Note- C; 1st Verse Note- C; Vocal Range- C3 – F4
-Play in C: Capo- 5; 1st Intro Note- G; 1st Verse Note- G
-Play in G: Capo- 10; 1st Intro Note- D; 1st Verse Note- D
+Current: Key- [B] ; 1st Intro Note- [A#] ; 1st Verse Note- [F#] ; Vocal Range- [] – [] ( oct)
+Original: Tempo- 4/4 110 BPM; Key- B; 1st Intro Note- F#; 1st Verse Note- F#; Vocal Range-
+Play in Am: Capo- ; 1st Intro Note- ; 1st Verse Note-
+Play in Em: Capo- ; 1st Intro Note- ; 1st Verse Note-
 
 Intro:
-[F]- - - [C7]- | [F]- - - - |
+[E(add#11)]- - [E] - [Esus2]- | - - [E]- - | [B]- - [Bsus2] - [B5] - | [F#sus4]- - [F#]- - | 
+[E(add#11)]- - [E] - [Esus2]- | - - [E]- - | [Bsus2]- [B]- - - | [B(add2)]- - - - |
 
-Verse (2x):
-Ki [F]heim, ki heim cha[C7]yeinu
-V'ō[C7]rech yomei[F]nu
-Uvo[F]hem, uvohem ne-[C7]--ge
-Uvo[C7]hem nege yōmom voloi[F]lo
+Verse 1:
+For [B]so many years they've been [F#/B]wai[B]ting
+Now [G#m]finally [F#/A#]they're cele[F#/B]bra[B]ting
+It's a [C#m7]girl, it's a boy, it's a [F#7]bundle of joy
+A [E(add9)]baby is born, [F#sus4]Mazel tov [F#]- - |
 
-Chorus (2x):
-Ki [F]heim, ki heim cha[Bb]yei[F]nu
-[Bb] V'ōrech [G7(b9)]yomei[F]nu
-Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
-Uvo[C7]hem nege yōmom voloi[F]lo
+For [B]so many years they'd i[F#/B]ma[B]gined
+The [D#m7b5]miracle finally [Em7]happened
+All the [G#m]prayers that were said, all the [C#m]tears that were shed
+Brought [F#sus4]down the blessing from a[F#]bove
 
-Interlude 1 (2x):
-[F]- - - - | [C7]- - - - | - - - - | [F6]- - - - |
-[F]- - - - | [C7]- - - - | - - - - | [F6]- - - - |
-
-Interlude 2 (2x):
-[F]- - - - | [Bb]- - [F]- - | [Bb]- - [G7(b9)]- - | [F]- - - - | 
-[Gm]- - - [C7]- | [Bb]- - [F]- - | [C7]- - - - | [F]- - - - |
-
-Verse (2x):
-Ki [F]heim, ki heim cha[C7]yeinu
-V'ō[C7]rech yomei[F]nu
-Uvo[F]hem, uvohem ne-[C7]--ge
-Uvo[C7]hem nege yōmom voloi[F]lo
+Bridge:
+[F#] For there's a [G#m]power that [F#]can't be un[E]done
+[E] When we u[B]nite in a cause, its a [C#m7(add11)]powerful force
+And [E(add9)]all the gates will [E]open [F#sus4]up - - - | [F#]- - |
 
 Chorus:
-Ki [F]heim, ki heim cha[Bb]yei[F]nu
-[Bb] V'ō[G7(b9)]rech yomei[F]nu
-Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
-Uvo[C7]hem nege yōmom voloi[F]lo
+[F#]Twenty-five [B]thousand candles [C#m]burned
+[C#m]Twenty-five [E]thousand hearts that [B]yearned
+[B]Praying for a[D#m]nother, to be a [G#m]mother
+Our [C#m7]deepest plea [F#sus4]- - |
 
-Chorus to Outro:
-Ki [F]heim, ki heim cha[Bb]yei[F]nu
-[Bb] V'ō[G7(b9)]rech yomei[F]nu
-Uvo[Gm]hem, uvo[C7]hem ne-[Bb] [F]ge
-[C7]Uvohem nege, uvohem nege
-[C7]Uvohem nege yōmom voloi[F]lo | - - - - |"
+[F#]Twenty-five [B]thousand gave their [C#m]share
+[C#m]Twenty-five [E]thousand really [B]cared
+[B] It's our am[D#m]bition, we've got a [G#m]mission
+V'[C#m7]zakeini, [F#sus4] v'[F#]zakei[E(add#11)]ni…
+
+Interlude:
+[E(add#11)]- - [E]- [Esus2]- | - - [E]- - | [B]- - - - | [F#sus4]- - | 
+
+Verse 2:
+[F#] You're [B]making the circle grow [F#]wi[B]der
+You're [G#m]helping the [F#/G#]world become [F#/B]brigh[B]ter
+You're a [C#m7]link in the chain, to bring an [F#]end to the pain
+You [E]fill our nation with [F#]light
+
+The [B]number of candles keeps [F#/B]grow[B]ing
+The [D#m7b5]light of our children keeps [Em7]glowing
+And as you [G#m]whisper a prayer, for a [C#m7]sister out there
+You're [F#sus4]helping us drive away in the [F#]night [F#sus4]- |
+
+Bridge:
+[F#] For there's a [G#m]power that [F#]can't be un[E]done
+When we u[B]nite in a cause, its a [C#m7(add11)]powerful force
+And [E(add9)]all the gates will [E]open [F#sus4]up - - - | [F#]- - |
+
+Chorus:
+[F#]Twenty-five [B]thousand candles [C#m]burned
+[C#m]Twenty-five [E]thousand hearts that [B]yearned
+[B]Praying for a[D#m]nother, to be a [G#m]mother
+Our [C#m7]deepest plea [F#sus4]- - |
+
+[F#]Twenty-five [B]thousand gave their [C#m]share
+[C#m]Twenty-five [E]thousand really [B]cared
+[B] It's our am[D#m]bition, we've got a [G#m]mission
+V'[C#m7]zakeini, [F#sus4]- - [F#]- - |
+
+Sax solo:
+[B]- - - - | - - - - | [D#m]- - - - | - - - - |
+[G#m]- - - - | [E]- - - - | [Ebsus4]- - - - | [Eb]- - - - |
+
+Interlude (La, la la…)
+[Abm]- - - - | [Gb]- - - - | [Ebm]- - - - | [E]- - - - |
+[Dbm]- - - - | [Ebm]- - - - | [Absus4]- - - - | [Ab]- - |
+
+Chorus:
+[Ab]Twenty-five [Db]thousand candles [Ebm]burned
+[Ebm]Twenty-five [Gb]thousand hearts that [Db]yearned
+[Db]Praying for a[Fm]nother, to be a [Bbm]mother
+Our [Ebm7]deepest plea [Absus4]- - |
+
+[Ab]Twenty-five [Db]thousand gave their [Ebm]share
+[Ebm]Twenty-five [Gb]thousand really [Db]cared
+[Db] It's our am[Fm]bition, we've got a [Bbm]mission
+V'[Ebm7]zakeini, [Absus4]- - |
+
+Chorus 2:
+[Ab]Twenty-five [Db]thousand candles [Ebm]bright
+[Ebm] How many [Gb]more can we ig[Db]nite
+Illumi[Fm]nating, as we're cre[Bbm]ating
+E[Ebm7]terni[Absus4]ty
+
+[Ab]Twenty-five [Dbsus4]thou[Db]sand, we've just be[Ebm]gun
+[Ebm]Let's keep on [Gb]adding one-by-[Db]one
+[Db]We're on a [Fm]mission, it's our am[Bbm]bition
+V'[Ebm7]zakeini, [Absus4] v'[Ab]za[Db]keini…
+
+Outro:
+[Db]- - - - | [Gb/Db]- - - - | [Db]- - [Dbsus4]- - | [Db(add2)]- |
+
+Performer- Benny Friedman; Album- Singles"
 """;
 
   final parser = ChordsProParser();
