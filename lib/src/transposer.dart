@@ -899,6 +899,7 @@ class ChordsProTransposer {
   void completeTranspose(
       List<Chord> chords, String fromKey, String toKey, KeyTonal keyTonal) {
     for (var chord in chords) {
+      if (!chord.isKnown) continue;
       var suffix = chord.isMinor ? 'm' : '';
       print('Root chord: ${chord.getRootChord().replaceAll('m', '')}');
       print('From: $fromKey');
