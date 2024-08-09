@@ -93,14 +93,20 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final sampleSong = """"
+{title: 25,000 Candles, V'zakeini 2}
+{artist: Benny Friedman}
 {key: B}
-"These chords have not yet been edited or polished, but you should still find them useful.  I Hope you enjoy!
+{time: 4/4}
+{tempo: 110}
+Producer- Bonei Olam; Arranger- Doni Gross; Composer- Miriam Israeli, Yitzy Waldner; Lyricist- Miriam Israeli; Album- Singles, 2021
+
+These chords have not yet been edited or polished, but you should still find them useful.  I Hope you enjoy!
 
 Details:
-Current: Key- [B] ; 1st Intro Note- [A#] ; 1st Verse Note- [F#] ; Vocal Range- [] – [] ( oct)
-Original: Tempo- 4/4 110 BPM; Key- B; 1st Intro Note- F#; 1st Verse Note- F#; Vocal Range-
-Play in Am: Capo- ; 1st Intro Note- ; 1st Verse Note-
-Play in Em: Capo- ; 1st Intro Note- ; 1st Verse Note-
+Current: Key- [B] ; 1st Intro Note- [A#] ; 1st Verse Note- [F#] ; Vocal Range- [B] – [B] (2.5 oct)
+Original: Tempo- 4/4 110 BPM; Key- B; 1st Intro Note- F#; 1st Verse Note- F#; Vocal Range- B2 - B4
+Play in C: Capo- 11; 1st Intro Note- B; 1st Verse Note- G
+Play in G: Capo- 4; 1st Intro Note- F#; 1st Verse Note- D
 
 Intro:
 [E(add#11)]- - [E] - [Esus2]- | - - [E]- - | [B]- - [Bsus2] - [B5] - | [F#sus4]- - [F#]- - | 
@@ -110,7 +116,7 @@ Verse 1:
 For [B]so many years they've been [F#/B]wai[B]ting
 Now [G#m]finally [F#/A#]they're cele[F#/B]bra[B]ting
 It's a [C#m7]girl, it's a boy, it's a [F#7]bundle of joy
-A [E(add9)]baby is born, [F#sus4]Mazel tov [F#]- - |
+A [E(add9)]baby is born, [F#sus4]Mazol tov [F#]- - |
 
 For [B]so many years they'd i[F#/B]ma[B]gined
 The [D#m7b5]miracle finally [Em7]happened
@@ -134,7 +140,7 @@ Our [C#m7]deepest plea [F#sus4]- - |
 V'[C#m7]zakeini, [F#sus4] v'[F#]zakei[E(add#11)]ni…
 
 Interlude:
-[E(add#11)]- - [E]- [Esus2]- | - - [E]- - | [B]- - - - | [F#sus4]- - | 
+[E(add#11)]- - [E] - [Esus2]- | - - [E]- - | [B]- - - - | [F#sus4]- - | 
 
 Verse 2:
 [F#] You're [B]making the circle grow [F#]wi[B]der
@@ -196,7 +202,12 @@ V'[Ebm7]zakeini, [Absus4] v'[Ab]za[Db]keini…
 Outro:
 [Db]- - - - | [Gb/Db]- - - - | [Db]- - [Dbsus4]- - | [Db(add2)]- |
 
-Performer- Benny Friedman; Album- Singles"
+Performer- Benny Friedman; Album- Singles
+
+Translation:
+N/A
+- N/A
+- N/A"
 """;
 
   final parser = ChordsProParser();
