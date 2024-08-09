@@ -218,6 +218,7 @@ N/A
   String? html;
   List<Widget> widgets = [];
   int transpose = 0;
+  KeyTonal _keyTonal = KeyTonal.sharp;
 
   late Song originalSong;
 
@@ -232,7 +233,7 @@ N/A
   }
 
   void parseData() {
-    originalSong = parser.parse(sampleSong, keyTonal: KeyTonal.sharp);
+    originalSong = parser.parse(sampleSong, keyTonal: _keyTonal);
     widgets = widgetFormatter.format(originalSong);
     transpose = 0;
     setState(() {});
@@ -292,8 +293,15 @@ N/A
 
   void transposeToKey(String key) {
     final song = getSong();
-    transposer.transpose(song, key,
-        keyTonal: sharps.contains(key) ? KeyTonal.sharp : KeyTonal.flat);
+    transposer.transpose(song, key, _keyTonal);
+    originalSong = song;
+    widgets = widgetFormatter.format(originalSong);
+    setState(() {});
+  }
+
+  void reformatSong() {
+    final song = getSong();
+    parser.changeSongTone(song, keyTonal: _keyTonal);
     originalSong = song;
     widgets = widgetFormatter.format(originalSong);
     setState(() {});
@@ -337,7 +345,23 @@ N/A
           ? SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: widgets,
+                children: [
+                  ToggleButtons(
+                    isSelected: [
+                      _keyTonal == KeyTonal.sharp,
+                      _keyTonal == KeyTonal.flat,
+                    ],
+                    onPressed: (index) {
+                      setState(() {
+                        _keyTonal = index == 0 ? KeyTonal.sharp : KeyTonal.flat;
+                      });
+
+                      reformatSong();
+                    },
+                    children: const [Text('#'), Text('b')],
+                  ),
+                  ...widgets
+                ],
               ),
             )
           : html != null

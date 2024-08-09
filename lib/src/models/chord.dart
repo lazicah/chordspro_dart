@@ -4,6 +4,36 @@ import 'package:chordspro_dart/src/models/key_tonal.dart';
 import 'package:chordspro_dart/src/notation/chord_notation_interface.dart';
 
 class Chord {
+  final sharps = [
+    'Bm',
+    'C#m',
+    'D#m',
+    'Em',
+    'F#m',
+    'G#m',
+    'D',
+    'E',
+    'F#',
+    'G',
+    'A',
+    'B'
+  ];
+
+  final flats = [
+    'Am',
+    'Bbm',
+    'Cm',
+    'Dm',
+    'Fm',
+    'Gm',
+    'C',
+    'Db',
+    'Eb',
+    'F',
+    'Ab',
+    'Bb',
+  ];
+
   static const List<String> ROOT_CHORDS = [
     'F#m',
     'C#m',
@@ -72,6 +102,14 @@ class Chord {
           final transposedChord =
               _getSharpOrFlatChord(rootChord, keyTonal == KeyTonal.sharp);
           this.rootChord = transposedChord + suffix;
+        } else if (sharps.contains(rootChord)) {
+          var suffix = rootChord.contains('m') ? 'm' : '';
+          final transposedChord = _getSharpOrFlatChord(rootChord, true);
+          this.rootChord = transposedChord + suffix;
+        } else if (flats.contains(rootChord)) {
+          var suffix = rootChord.contains('m') ? 'm' : '';
+          final transposedChord = _getSharpOrFlatChord(rootChord, false);
+          this.rootChord = transposedChord + suffix;
         } else {
           this.rootChord = rootChord;
         }
@@ -121,6 +159,7 @@ class Chord {
     if (targetNotation != null) {
       return targetNotation.convertChordRootToNotation(rootChord);
     }
+
     return rootChord;
   }
 
@@ -133,8 +172,23 @@ class Chord {
 
   String getOriginalName() => originalName;
 
-  void transposeTo(String rootChord) {
-    this.rootChord = rootChord;
+  void transposeTo(String rootChord, KeyTonal keyTonal) {
+    if (keyTonal != KeyTonal.original) {
+      var suffix = rootChord.contains('m') ? 'm' : '';
+      final transposedChord =
+          _getSharpOrFlatChord(rootChord, keyTonal == KeyTonal.sharp);
+      this.rootChord = transposedChord + suffix;
+    } else if (sharps.contains(rootChord)) {
+      var suffix = rootChord.contains('m') ? 'm' : '';
+      final transposedChord = _getSharpOrFlatChord(rootChord, true);
+      this.rootChord = transposedChord + suffix;
+    } else if (flats.contains(rootChord)) {
+      var suffix = rootChord.contains('m') ? 'm' : '';
+      final transposedChord = _getSharpOrFlatChord(rootChord, false);
+      this.rootChord = transposedChord + suffix;
+    } else {
+      this.rootChord = rootChord;
+    }
   }
 
   @override

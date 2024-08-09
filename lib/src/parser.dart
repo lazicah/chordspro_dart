@@ -179,4 +179,21 @@ class ChordsProParser {
       hasText: hasText,
     );
   }
+
+  changeSongTone(Song song,
+      {KeyTonal keyTonal = KeyTonal.original,
+      List<ChordNotationInterface> sourceNotations = const []}) {
+    for (var line in song.getLines()) {
+      if (line is Lyrics) {
+        for (var block in line.blocks) {
+          var chords = block.chords;
+          if (chords.isNotEmpty) {
+            for (var chord in chords) {
+              chord.transposeTo(chord.getRootChord(), keyTonal);
+            }
+          }
+        }
+      }
+    }
+  }
 }
